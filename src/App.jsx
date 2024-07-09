@@ -4,7 +4,7 @@ import './App.css'
 function App() {
 
   const [ValorInput, setValorInput] = useState("");
-  const [gifs, setGifs] = useState();
+  const [gifs, setGifs] = useState([]);
 
   const handleChange = (event) => {
     const valor = event.target.value;
@@ -38,6 +38,11 @@ function App() {
     <form onSubmit={handleSubmit}>
       <input type="text" value={ValorInput} onChange={(event) => handleChange(event)}/>
       </form>
+      {
+        gifs.map((gif)=>(
+          <img key={gif.id} src={gif.images.original.url} alt={gif.title}/>
+        ))
+      }
     </>
   )
 }
