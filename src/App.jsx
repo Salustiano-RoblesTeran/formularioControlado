@@ -9,11 +9,17 @@ function App() {
   const handleChange = (event) => {
     const valor = event.target.value;
     setValorInput(valor);
-    console.log(event.target.value);
   }
 
-  const getGifs = async () => {
-    const url = "https://api.giphy.com/v1/gifs/search?api_key=2xxlV44o6d1jbv1JQcJ265qb0jBNE22E&q=cheeseburgers";
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("enviado");
+    const gifs = await getGifs(ValorInput)
+    setGifs(gifs);
+  }
+
+  const getGifs = async (search) => {
+    const url = `https://api.giphy.com/v1/gifs/search?api_key=2xxlV44o6d1jbv1JQcJ265qb0jBNE22E&q=${search}`;
 
       const response = await fetch(url);
       if(!response.ok){
@@ -21,16 +27,17 @@ function App() {
       }
 
       const data = await response.json();
-      console.log(data)
+
+      return data.data;
   }
 
-  getGifs();
+
 
   return (
     <>
+    <form onSubmit={handleSubmit}>
       <input type="text" value={ValorInput} onChange={(event) => handleChange(event)}/>
-
-      <p>{ValorInput}</p>
+      </form>
     </>
   )
 }
